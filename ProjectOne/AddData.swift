@@ -13,10 +13,14 @@ class DataItem {
     var listItem: String
     var priorityItem: Int
     var statusItem: Bool
+    var part: Int
+    var line: Int
     
-    init(listItem:String, priorityItem: Int, statusItem: Bool) {
+    init(listItem:String, priorityItem: Int, statusItem: Bool, part: Int, line: Int) {
         self.listItem = listItem
         self.priorityItem = priorityItem
         self.statusItem = statusItem
+        self.part = part
+        self.line = line
     }
 }

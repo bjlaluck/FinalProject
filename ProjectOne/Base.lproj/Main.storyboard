@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IUa-Ca-zHg">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="kFX-Si-3ON" detailTextLabel="wjo-ea-uJv" style="IBUITableViewCellStyleValue1" id="cTk-Kd-AtY">
@@ -74,10 +74,10 @@
             </objects>
             <point key="canvasLocation" x="972" y="37.331334332833585"/>
         </scene>
-        <!--Entry Info View Controller-->
+        <!--Second View Controller-->
         <scene sceneID="g7k-WA-F2p">
             <objects>
-                <viewController id="c0i-pE-Tto" customClass="EntryInfoViewController" customModule="ProjectOne" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="c0i-pE-Tto" customClass="SecondViewController" customModule="ProjectOne" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="E8y-hh-3w0"/>
                         <viewControllerLayoutGuide type="bottom" id="6r2-ql-tPh"/>
@@ -86,20 +86,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="YOu are Here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZPw-F4-rvo">
-                                <rect key="frame" x="152" y="264" width="103" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="VhG-RH-fbB">
+                                <rect key="frame" x="97.5" y="318.5" width="180" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="eiK-Hh-mUP"/>
+                                </constraints>
                                 <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gyu-4n-XTD">
+                                <rect key="frame" x="165" y="487" width="34" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="savePress:" destination="c0i-pE-Tto" eventType="touchUpInside" id="0n5-yd-7o4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="VhG-RH-fbB" firstAttribute="centerX" secondItem="ieU-Qw-88H" secondAttribute="centerX" id="IbF-eI-Xf6"/>
+                            <constraint firstItem="VhG-RH-fbB" firstAttribute="centerY" secondItem="ieU-Qw-88H" secondAttribute="centerY" id="JoZ-MH-N9q"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="textField" destination="VhG-RH-fbB" id="AqZ-Fq-sya"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="Back" id="7RO-rj-170"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2K0-cj-bkm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1785" y="37"/>
+            <point key="canvasLocation" x="2188" y="-64"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="EFS-QX-idV">
@@ -120,4 +138,7 @@
             <point key="canvasLocation" x="-129" y="46"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="7RO-rj-170"/>
+    </inferredMetricsTieBreakers>
 </document>

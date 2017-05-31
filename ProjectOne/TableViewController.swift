@@ -8,13 +8,22 @@
 
 import UIKit
 
-class TableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+class TableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MyProtocol {
     @IBOutlet weak var tableView: UITableView!
     
      var workItems = [DataItem]()
      var homeItems = [DataItem]()
      var  allItems = [[DataItem]]()
+    
+    var aa: String = ""
+    var bb: Int = 0
+    var cc: Bool = false
+    var dd: Int = 0
+    var ee: Int = 0
+    
+    
+    
+    var dataItem: DataItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,11 +31,11 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         automaticallyAdjustsScrollViewInsets = false
                 navigationItem.rightBarButtonItem = editButtonItem
         
-        workItems.append(DataItem(listItem: "Schedule meeting", priorityItem: 1, statusItem: false))
-        workItems.append(DataItem(listItem: "Call client", priorityItem: 1, statusItem: false))
+        workItems.append(DataItem(listItem: "Schedule meeting", priorityItem: 1, statusItem: false, part: 0, line: 0))
+        workItems.append(DataItem(listItem: "Call client", priorityItem: 1, statusItem: false, part: 0, line: 0))
         
-        homeItems.append(DataItem(listItem: "Pay bills", priorityItem: 1, statusItem: false))
-        homeItems.append(DataItem(listItem: "Empty lunch bag", priorityItem: 1, statusItem: false))
+        homeItems.append(DataItem(listItem: "Pay bills", priorityItem: 1, statusItem: false, part: 0, line: 0))
+        homeItems.append(DataItem(listItem: "Empty lunch bag", priorityItem: 1, statusItem: false, part: 0, line: 0))
         
         allItems.append(workItems)
         allItems.append(homeItems)
@@ -81,7 +90,12 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             )
         }
         if editingStyle == .insert {
+            dataItem = DataItem(listItem: "New Item", priorityItem: 1, statusItem: false, part: indexPath.section, line: indexPath.row)
             performSegue(withIdentifier: "infoSegue", sender: self)
+            
+           
+
+            
         }
         
     }
@@ -100,6 +114,13 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             tableView.setEditing(true, animated: true)
         }
         else {
+            tableView.beginUpdates()
+            
+            for (index, sectionItem) in allItems.enumerated() {
+                let indexPath = IndexPath(row: sectionItem.count, section: index)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            tableView.endUpdates()
             tableView.setEditing(false, animated: true)
         }
     }
@@ -111,5 +132,31 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         return .delete
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let SecondVC = segue.destination as? SecondViewController{
+            SecondVC.dataItem = self.dataItem
+            SecondVC.myProtocol = self
+            
+        }
+    }
+    func update (dataItem:DataItem) {
+          self.dataItem = dataItem
+            aa = (self.dataItem?.listItem)!
+            bb = (self.dataItem?.priorityItem)!
+            cc = (self.dataItem?.statusItem)!
+            dd = (self.dataItem?.part)!
+            ee = (self.dataItem?.line)!
+        
+        
+        
+        let newData = DataItem(listItem: aa, priorityItem: bb, statusItem: true, part: dd, line: ee)
+        
+         allItems[dd].append(newData)
+        let indexPath = IndexPath(row: ee, section: dd)
+         tableView.insertRows(at: [indexPath], with: .fade)
+        
+    }
+    
 }
 

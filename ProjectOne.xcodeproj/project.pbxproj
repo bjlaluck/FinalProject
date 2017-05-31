@@ -13,7 +13,7 @@
 		0110E0AF1EDB9594000F99CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0110E0AE1EDB9594000F99CF /* Assets.xcassets */; };
 		0110E0B21EDB9594000F99CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0110E0B01EDB9594000F99CF /* LaunchScreen.storyboard */; };
 		0110E0BC1EDB994E000F99CF /* AddData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0110E0BB1EDB994E000F99CF /* AddData.swift */; };
-		0110E0BE1EDBB546000F99CF /* EntryInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0110E0BD1EDBB546000F99CF /* EntryInfoViewController.swift */; };
+		01D1185D1EDCF19B00373568 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D1185C1EDCF19B00373568 /* SecondViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +25,7 @@
 		0110E0B11EDB9594000F99CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0110E0B31EDB9594000F99CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0110E0BB1EDB994E000F99CF /* AddData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddData.swift; sourceTree = "<group>"; };
-		0110E0BD1EDBB546000F99CF /* EntryInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryInfoViewController.swift; sourceTree = "<group>"; };
+		01D1185C1EDCF19B00373568 /* SecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,10 +59,10 @@
 			isa = PBXGroup;
 			children = (
 				0110E0A71EDB9594000F99CF /* AppDelegate.swift */,
-				0110E0A91EDB9594000F99CF /* TableViewController.swift */,
 				0110E0BB1EDB994E000F99CF /* AddData.swift */,
+				0110E0A91EDB9594000F99CF /* TableViewController.swift */,
+				01D1185C1EDCF19B00373568 /* SecondViewController.swift */,
 				0110E0AB1EDB9594000F99CF /* Main.storyboard */,
-				0110E0BD1EDBB546000F99CF /* EntryInfoViewController.swift */,
 				0110E0AE1EDB9594000F99CF /* Assets.xcassets */,
 				0110E0B01EDB9594000F99CF /* LaunchScreen.storyboard */,
 				0110E0B31EDB9594000F99CF /* Info.plist */,
@@ -142,8 +142,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01D1185D1EDCF19B00373568 /* SecondViewController.swift in Sources */,
 				0110E0AA1EDB9594000F99CF /* TableViewController.swift in Sources */,
-				0110E0BE1EDBB546000F99CF /* EntryInfoViewController.swift in Sources */,
 				0110E0BC1EDB994E000F99CF /* AddData.swift in Sources */,
 				0110E0A81EDB9594000F99CF /* AppDelegate.swift in Sources */,
 			);
@@ -309,6 +309,7 @@
 				0110E0B81EDB9594000F99CF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
