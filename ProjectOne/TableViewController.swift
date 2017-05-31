@@ -15,11 +15,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
      var homeItems = [DataItem]()
      var  allItems = [[DataItem]]()
     
-    var aa: String = ""
-    var bb: Int = 0
-    var cc: Bool = false
-    var dd: Int = 0
-    var ee: Int = 0
+    
     
     
     
@@ -142,18 +138,11 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     func update (dataItem:DataItem) {
           self.dataItem = dataItem
-            aa = (self.dataItem?.listItem)!
-            bb = (self.dataItem?.priorityItem)!
-            cc = (self.dataItem?.statusItem)!
-            dd = (self.dataItem?.part)!
-            ee = (self.dataItem?.line)!
         
+        let newData = DataItem(listItem: (self.dataItem?.listItem)!, priorityItem: dataItem.priorityItem, statusItem: dataItem.statusItem, part: dataItem.part, line: dataItem.line)
         
-        
-        let newData = DataItem(listItem: aa, priorityItem: bb, statusItem: true, part: dd, line: ee)
-        
-         allItems[dd].append(newData)
-        let indexPath = IndexPath(row: ee, section: dd)
+         allItems[dataItem.part].append(newData)
+        let indexPath = IndexPath(row: dataItem.line, section: dataItem.part)
          tableView.insertRows(at: [indexPath], with: .fade)
         
     }

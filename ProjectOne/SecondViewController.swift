@@ -23,24 +23,19 @@ class SecondViewController: UIViewController, UITextFieldDelegate {
     
     var dataItem: DataItem?
     
-    var aa: String = ""
-    var bb: Int?
-    var cc: Bool?
-    var dd: Int?
-    var ee: Int?
+    
     
     
     
     @IBAction func savePress(_ sender: Any) {
-         if let myProtocol = self.myProtocol, let listItem = self.textField.text, let priorityItem = self.priorityItem, let statusItem = self.statusItem, let part  = self.part, let line = self.line
-           
+         if let myProtocol = self.myProtocol, let listItem = textField.text, let priorityItem = dataItem?.priorityItem, let statusItem = dataItem?.statusItem, let part = dataItem?.part, let line = dataItem?.line
          { let dataItem: DataItem = DataItem(listItem: listItem, priorityItem: priorityItem, statusItem: statusItem, part: part, line: line)
             myProtocol.update(dataItem: dataItem)
             
 
         }
            
-            
+        
         
     }
     
@@ -50,9 +45,7 @@ class SecondViewController: UIViewController, UITextFieldDelegate {
 
         if let data = self.dataItem{
             textField.text = data.listItem
-            bb = data.priorityItem
-               dd = data.part
-            ee = data.line
+            
         }
         
         
