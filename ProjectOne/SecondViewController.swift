@@ -35,7 +35,7 @@ class SecondViewController: UIViewController, UITextFieldDelegate {
 
         }
            
-       
+       self.navigationController?.popToRootViewController(animated: true)
 
         
     }

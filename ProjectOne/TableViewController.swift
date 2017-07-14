@@ -139,13 +139,13 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     func update (dataItem:DataItem) {
         
         
-          self.dataItem = dataItem
+        self.dataItem = dataItem
         
         let newData = DataItem(listItem: (self.dataItem?.listItem)!, priorityItem: dataItem.priorityItem, statusItem: dataItem.statusItem, part: dataItem.part, line: dataItem.line)
         
-         allItems[dataItem.part].append(newData)
+        allItems[dataItem.part].append(newData)
         let indexPath = IndexPath(row: dataItem.line, section: dataItem.part)
-         tableView.insertRows(at: [indexPath], with: .fade)
+        tableView.insertRows(at: [indexPath], with: .fade)
         
     }
     
