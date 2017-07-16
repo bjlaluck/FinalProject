@@ -104,6 +104,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             for (index, sectionItem) in allItems.enumerated() {
                 let indexPath = IndexPath(row: sectionItem.count, section: index)
+                
                 tableView.insertRows(at: [indexPath], with: .fade)
             }
             tableView.endUpdates()
@@ -123,11 +124,76 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         let sectionItem = allItems[indexPath.section]
-        if indexPath.row >= sectionItem.count && isEditing {
-            return .insert
+        print(sectionItem.count)
+        print(indexPath.section)
+        print(indexPath.row)
+        print("End")
+        
+        
+      
+        if  indexPath.row >= sectionItem.count  && isEditing {
+           return .insert
         }
         return .delete
     }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        let sectionItem = allItems[indexPath.section]
+        if indexPath.row >= sectionItem.count && isEditing{
+            return false
+        }
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        if destinationIndexPath.section == sourceIndexPath.section {
+            let section = sourceIndexPath.section
+            var oldRow = sourceIndexPath.row
+            var newRow = destinationIndexPath.row
+            let movedEarlier = newRow < oldRow
+            
+            if !movedEarlier  {
+                newRow += 1  }
+           
+                allItems[section].insert(allItems[section][oldRow], at: newRow)
+            
+            
+            if movedEarlier {
+                oldRow += 1}
+            allItems[section].remove(at: oldRow)
+        }
+        else{
+           
+            
+            let item = allItems[sourceIndexPath.section][sourceIndexPath.row]
+            
+           
+                
+                allItems[destinationIndexPath.section].insert(item, at: destinationIndexPath.row)
+                allItems[sourceIndexPath.section].remove(at: sourceIndexPath.row)
+            
+        }
+    }
+  
+    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        let sectionItem = allItems[proposedDestinationIndexPath.section]
+       
+        if sectionItem.count == 0 {
+            return IndexPath(row: sectionItem.count, section: proposedDestinationIndexPath.section)
+        }
+        else if proposedDestinationIndexPath.row >= sectionItem.count {
+                return IndexPath(row: sectionItem.count - 1, section: proposedDestinationIndexPath.section)
+            } else {
+            return proposedDestinationIndexPath
+   
+        }
+        
+    }
+    
+    
+    
+    
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let SecondVC = segue.destination as? SecondViewController{
