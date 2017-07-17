@@ -24,6 +24,7 @@ class SecondViewController: UIViewController, UITextFieldDelegate {
     var dataItem: DataItem?
     
     
+    @IBOutlet weak var textDetailsLabel: UILabel!
     
     
     
@@ -49,7 +50,7 @@ class SecondViewController: UIViewController, UITextFieldDelegate {
             
         }
         
-        
+       
     }
 
     override func didReceiveMemoryWarning() {

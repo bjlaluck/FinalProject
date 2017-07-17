@@ -17,7 +17,9 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     
-    
+
+
+   
     
     var dataItem: DataItem?
     
@@ -25,7 +27,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         automaticallyAdjustsScrollViewInsets = false
-                navigationItem.rightBarButtonItem = editButtonItem
+        navigationItem.rightBarButtonItem = editButtonItem
         
         workItems.append(DataItem(listItem: "Schedule meeting", priorityItem: 1, statusItem: false, part: 0, line: 0))
         workItems.append(DataItem(listItem: "Call client", priorityItem: 1, statusItem: false, part: 0, line: 0))
@@ -35,8 +37,57 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         allItems.append(workItems)
         allItems.append(homeItems)
+        
+       
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(recognizer:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(gesture: )))
+        self.view.addGestureRecognizer(longPress)
+        self.view.addGestureRecognizer(tapGesture)
+        
+        
+       
+        
+        
+        
     }
+   
+    
 
+    func handleLongPress(recognizer: UILongPressGestureRecognizer) {
+        
+        if recognizer.state == .began  {
+            
+            let touchPoint = recognizer.location(in: self.tableView)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                
+                allItems[indexPath.section].remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        }
+    }
+    
+    func handleTap(gesture: UITapGestureRecognizer) {
+        
+       
+        let touchPoint = gesture.location(in: self.tableView)
+        if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+            print (indexPath)
+            
+            if indexPath.row == allItems[indexPath.section].count {
+                dataItem = DataItem(listItem: "New Item", priorityItem: 1, statusItem: false, part: indexPath.section, line: indexPath.row)
+                performSegue(withIdentifier: "infoSegue", sender: self)
+            } else {
+                dataItem = allItems[indexPath.section][indexPath.row]
+                performSegue(withIdentifier: "infoSegue", sender: self)
+            }
+        }
+    
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -54,6 +105,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        
         
         if indexPath.row >= allItems[indexPath.section].count && isEditing {
             cell.textLabel?.text = "Add new Item"
@@ -96,10 +148,13 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
     
+   
+    
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         
         if editing {
+            
             tableView.beginUpdates()
             
             for (index, sectionItem) in allItems.enumerated() {
@@ -109,7 +164,15 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             }
             tableView.endUpdates()
             tableView.setEditing(true, animated: true)
-        }
+            if let recognizers = view.gestureRecognizers {
+                for recognizer in recognizers {
+                   view.removeGestureRecognizer(recognizer)
+                }
+            }
+
+
+            
+      }
         else {
             tableView.beginUpdates()
             
@@ -119,18 +182,16 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             }
             tableView.endUpdates()
             tableView.setEditing(false, animated: true)
+            let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(recognizer:)))
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(gesture: )))
+            self.view.addGestureRecognizer(longPress)
+            self.view.addGestureRecognizer(tapGesture)
+
         }
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         let sectionItem = allItems[indexPath.section]
-        print(sectionItem.count)
-        print(indexPath.section)
-        print(indexPath.row)
-        print("End")
-        
-        
-      
         if  indexPath.row >= sectionItem.count  && isEditing {
            return .insert
         }
@@ -154,8 +215,8 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             if !movedEarlier  {
                 newRow += 1  }
-           
-                allItems[section].insert(allItems[section][oldRow], at: newRow)
+            
+            allItems[section].insert(allItems[section][oldRow], at: newRow)
             
             
             if movedEarlier {
@@ -163,29 +224,26 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             allItems[section].remove(at: oldRow)
         }
         else{
-           
+            
             
             let item = allItems[sourceIndexPath.section][sourceIndexPath.row]
-            
-           
-                
-                allItems[destinationIndexPath.section].insert(item, at: destinationIndexPath.row)
-                allItems[sourceIndexPath.section].remove(at: sourceIndexPath.row)
+            allItems[destinationIndexPath.section].insert(item, at: destinationIndexPath.row)
+            allItems[sourceIndexPath.section].remove(at: sourceIndexPath.row)
             
         }
     }
   
     func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         let sectionItem = allItems[proposedDestinationIndexPath.section]
-       
+        
         if sectionItem.count == 0 {
+            // allows user to move item into section that is empty
             return IndexPath(row: sectionItem.count, section: proposedDestinationIndexPath.section)
-        }
-        else if proposedDestinationIndexPath.row >= sectionItem.count {
-                return IndexPath(row: sectionItem.count - 1, section: proposedDestinationIndexPath.section)
-            } else {
+        } else if proposedDestinationIndexPath.row >= sectionItem.count {
+            // stops user from moving after "Add New Item" row
+            return IndexPath(row: sectionItem.count - 1, section: proposedDestinationIndexPath.section)
+        } else {
             return proposedDestinationIndexPath
-   
         }
         
     }
@@ -210,10 +268,16 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         let newData = DataItem(listItem: (self.dataItem?.listItem)!, priorityItem: dataItem.priorityItem, statusItem: dataItem.statusItem, part: dataItem.part, line: dataItem.line)
         
         allItems[dataItem.part].append(newData)
-        let indexPath = IndexPath(row: dataItem.line, section: dataItem.part)
-        tableView.insertRows(at: [indexPath], with: .fade)
+        self.tableView.reloadData()
+        
         
     }
     
+}
+
+extension UIGestureRecognizer {
+    func cancel() {
+        isEnabled = false
+            }
 }
 
